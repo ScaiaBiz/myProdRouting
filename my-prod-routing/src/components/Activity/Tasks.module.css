@@ -1,0 +1,19 @@
+.header {
+	font-size: 30px;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.backArrow {
+	text-decoration: none;
+	border: 1px solid transparent;
+	color: var(--contrast);
+	border-radius: 6px;
+}
+.backArrow:hover {
+	color: var(--contrast);
+	background-color: var(--higlight);
+	border: 1px solid black;
+}

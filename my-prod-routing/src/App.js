@@ -4,12 +4,17 @@ import { MenuElements } from './__data/common';
 import Menu from './components/Menu/Menu';
 
 import classes from './App.module.css';
-// import Presenze from './components/Presenze/Presenze';
-// import Dipendenti from './components/Presenze/Dipendenti';
+
+import Activity from './components/Activity/Activity';
+import Models from './components/Activity/Models';
+import Stages from './components/Activity/Stages';
+import Tasks from './components/Activity/Tasks';
 
 const comp = {
-	Presenze: <p>Presenze</p>,
-	Dipendenti: <p>Presenze</p>,
+	Activity: <Activity />,
+	Models: <Models />,
+	Stages: <Stages />,
+	Tasks: <Tasks />,
 };
 
 function App() {

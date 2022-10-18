@@ -4,7 +4,7 @@ export const useHttpClient = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const APP_name = process.env.REACT_APP_NAME;
-	const SRV_port = process.env.REACT_APP_SRVPORT || 3106;
+	const SRV_port = process.env.REACT_APP_SRVPORT || 3107;
 	const SRV_name = process.env.REACT_APP_SRVNAME || 'localhost';
 	const SRV_debug = process.env.REACT_APP_SRVDEBUG || 'localhost';
 
@@ -12,7 +12,7 @@ export const useHttpClient = () => {
 
 	const activeHttpReq = useRef([]);
 
-	const currentAppName = 'my-attendance';
+	const currentAppName = 'my-prod-routing';
 
 	let srv;
 

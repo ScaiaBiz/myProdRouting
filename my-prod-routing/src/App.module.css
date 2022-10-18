@@ -40,6 +40,10 @@
 	box-sizing: border-box;
 }
 
+a {
+	text-decoration: none;
+}
+
 html {
 	max-height: 100vh;
 	overflow: hidden;

@@ -5,15 +5,20 @@ import { MenuElements } from '../../__data/common';
 
 import classes from './Menu.module.css';
 
+import Icon from '../../utils/Icon';
+
 function Menu() {
 	const [openElId, setOpenElId] = useState('');
 
-	const showSubMenu = id => {
-		setOpenElId(id + 'parent');
-		let el = document.getElementById(id);
-		el.classList.toggle(classes.subM_Visible);
-		let pEl = document.getElementById(id + 'parent');
-		pEl.classList.toggle(classes.navElOpen);
+	const showSubMenu = (id, bidirectional = '') => {
+		console.log(bidirectional);
+		if (bidirectional === '') {
+			setOpenElId(id + 'parent');
+			let el = document.getElementById(id);
+			el.classList.toggle(classes.subM_Visible);
+			let pEl = document.getElementById(id + 'parent');
+			pEl.classList.toggle(classes.navElOpen);
+		}
 	};
 
 	const hideSubMenu = level => {
@@ -58,11 +63,12 @@ function Menu() {
 							className={classN}
 							to={parentPath + e.path}
 							style={{ marginBottom: 0 }}
-							onClick={() => showSubMenu(e._id)}
+							onClick={() => showSubMenu(e._id, openElId)}
 						>
 							{e.description}
 						</NavLink>
 						<div id={e._id} className={`${classes.subM}`} level={level}>
+							<Icon text='expand_less' action={() => hideSubMenu(level)} />
 							{subElement}
 						</div>
 					</React.Fragment>
