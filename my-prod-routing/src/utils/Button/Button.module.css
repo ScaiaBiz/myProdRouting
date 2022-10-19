@@ -36,9 +36,9 @@
 	border: var(--ButtonStdTxtColor) 2px solid;
 }
 .reverseDanger {
-	background-color: var(--ButtonStdTxtColor);
-	color: var(--ButtonStdBgColor);
-	border: var(--ButtonStdBgColor) 2px solid;
+	background-color: var(--ButtonDngrTxtColor);
+	color: var(--ButtonDngrBgColor);
+	border: var(--ButtonDngrBgColor) 2px solid;
 }
 .reverseDanger:hover,
 .reverseDanger:focus,

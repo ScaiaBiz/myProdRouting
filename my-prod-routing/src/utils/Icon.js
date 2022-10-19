@@ -2,10 +2,10 @@ import React from 'react';
 
 import './Icon.css';
 
-function Svg({ action, text }) {
+function Svg({ action, text, cls }) {
 	if (text) {
 		return (
-			<span className='material-icons' onClick={action}>
+			<span className={'material-icons ' + cls} onClick={action}>
 				{text}
 			</span>
 		);

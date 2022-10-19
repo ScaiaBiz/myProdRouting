@@ -1,0 +1,14 @@
+.add {
+	font-size: 2rem;
+	padding: 16px 1%;
+	margin-bottom: 2%;
+	border-bottom: 1px solid var(--higlight);
+}
+
+.add:hover {
+	background-color: var(--higlight);
+	border-radius: 5px;
+	box-shadow: 2px 2px 2px var(--bgColor);
+	color: var(--contrast);
+	cursor: pointer;
+}

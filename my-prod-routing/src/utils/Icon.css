@@ -37,3 +37,14 @@
 .material-icons:hover {
 	cursor: pointer;
 }
+
+.todo:hover {
+	color: var(--TODO);
+}
+.stopped:hover {
+	color: var(--STOPED);
+}
+
+.paused:hover {
+	color: var(--PAUSED);
+}
