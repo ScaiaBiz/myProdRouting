@@ -290,6 +290,7 @@ const Input = props => {
 			className={`${classes.formCtrl} ${
 				!inputState.isValid && inputState.isTuched && classes.formCtrl_invalid
 			} ${props.elementType && classes.formCtrl__small}`}
+			style={{ width: props.width }}
 		>
 			<label htmlFor={props.id}>{props.label}</label>
 

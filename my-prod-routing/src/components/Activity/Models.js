@@ -62,7 +62,7 @@ function Models() {
 
 	const writeModelsCards = () => {
 		const visual = modelsData.map(t => {
-			return <ModelCard key={t._id} data={t} />;
+			return <ModelCard key={t._id} data={t} reload={getModels} />;
 		});
 		setModelsCard(visual);
 	};

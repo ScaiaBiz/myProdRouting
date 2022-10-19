@@ -7,7 +7,7 @@ exports.getListFromSettings = async (req, res, next) => {
 	console.log('>>> Richiesta nomi STAGE');
 	try {
 		const data = await Setting.findOne({ name: 'Stages' });
-		console.log(data);
+		// console.log(data);
 		if (!data) {
 			res.status(201).json([]);
 		}

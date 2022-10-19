@@ -8,4 +8,7 @@ const router = express.Router();
 router.get('/getList', modelCtrl.getModelsList);
 router.post('/create', modelCtrl.postNewModel);
 
+router.post('/addStage', modelCtrl.addStage);
+router.post('/addTask', modelCtrl.addTask);
+
 module.exports = router;
