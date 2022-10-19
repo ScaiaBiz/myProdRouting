@@ -1,0 +1,22 @@
+.stage {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	/* background-color: lightblue; */
+	margin: 1% 0;
+}
+
+.stageName {
+	color: var(--higlight);
+	/* background-color: lightcyan; */
+}
+
+.tasks {
+	/* background-color: lightgoldenrodyellow; */
+	display: flex;
+	/* flex-direction: row; */
+	align-items: center;
+	display: flex;
+	margin-left: 20px;
+}
