@@ -1,0 +1,32 @@
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-direction: column;
+	font-size: 1.5rem;
+	background-color: var(--contrast);
+	color: var(--bgColor);
+	border: 1px solid var(--bgColor);
+	border-radius: 10px;
+	height: 150px;
+	width: 220px;
+}
+
+.description {
+	/* padding-bottom: 5%;
+	border-bottom: 2px solid var(--higlight); */
+}
+
+.controls {
+	color: var(--ENDEDtext);
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.disabled {
+	background-color: var(--ENDED);
+	color: var(--ENDEDtext);
+	border: 1px solid;
+}

@@ -1,19 +1,38 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	height: 100%;
+	width: 100%;
+}
+
 .header {
-	font-size: 30px;
+	font-size: 2rem;
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
 	justify-content: flex-start;
+	width: 100%;
 }
 
 .backArrow {
 	text-decoration: none;
 	border: 1px solid transparent;
-	color: var(--contrast);
 	border-radius: 6px;
+	color: var(--higlight);
 }
 .backArrow:hover {
 	color: var(--contrast);
 	background-color: var(--higlight);
 	border: 1px solid black;
+}
+
+.cardList {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-around;
+	gap: 2rem;
 }

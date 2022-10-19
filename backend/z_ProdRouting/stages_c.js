@@ -1,6 +1,6 @@
 const HttpError = require('../O_models/m_error');
 
-const Task = require('../O_models/m_task');
+const Stages = require('../O_models/m_stage');
 const Setting = require('../O_models/m_settings');
 
 exports.getListFromSettings = async (req, res, next) => {
@@ -8,10 +8,10 @@ exports.getListFromSettings = async (req, res, next) => {
 	try {
 		const data = await Setting.findOne({ name: 'Stages' });
 		console.log(data);
-		if (data.value.length > 0) {
-			res.status(201).json(data.value);
+		if (!data) {
+			res.status(201).json([]);
 		}
-		res.status(201).json([]);
+		res.status(201).json(data.value);
 	} catch (error) {
 		next(new HttpError('Errore non identificato: ' + error.message, 404));
 	}
@@ -19,17 +19,14 @@ exports.getListFromSettings = async (req, res, next) => {
 
 exports.addTaskToSettings = async (req, res, next) => {
 	console.log('>>> Ricevo nuovo nome STAGE');
-	console.log(req);
 	try {
 		const newValue = req.body.value;
-		console.log(newValue);
 		const setting = await Setting.findOne({ name: 'Stages' });
-		let data;
 		if (!setting) {
-			data = new Setting({ name: 'Stages', value: [newValue] });
+			const data = new Setting({ name: 'Stages', value: [newValue] });
 			try {
 				await data.save();
-				res.status(201).json(data);
+				res.status(201).json(data.value);
 			} catch (error) {
 				next(new HttpError('Un TASK con lo stesso nome esiste già', 404));
 			}
@@ -38,6 +35,28 @@ exports.addTaskToSettings = async (req, res, next) => {
 			await setting.save();
 			res.status(201).json(setting.value);
 		}
+	} catch (error) {
+		next(new HttpError('Errore non identificato: ' + error.message, 404));
+	}
+};
+
+exports.toggleTaskVisibility = async (req, res, next) => {
+	console.log('>>> Modifica visibilità STAGE');
+	const stageId = req.params.id;
+
+	try {
+		const stages = await Setting.findOne({ name: 'Stages' });
+		let r;
+		stages.value.map(stage => {
+			if (stage._id == stageId) {
+				stage.isActive = !stage.isActive;
+				r = stage;
+			}
+			return stage;
+		});
+
+		await stages.save();
+		res.status(201).json(r);
 	} catch (error) {
 		next(new HttpError('Errore non identificato: ' + error.message, 404));
 	}

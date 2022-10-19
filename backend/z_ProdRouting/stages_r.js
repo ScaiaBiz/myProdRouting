@@ -8,4 +8,6 @@ const router = express.Router();
 router.get('/getListFromSettings', stagesCtrl.getListFromSettings);
 router.post('/addToSettings', stagesCtrl.addTaskToSettings);
 
+router.get('/toggleVisibility/:id', stagesCtrl.toggleTaskVisibility);
+
 module.exports = router;

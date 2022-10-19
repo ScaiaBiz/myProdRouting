@@ -4,7 +4,13 @@ const Schema = mongoose.Schema;
 
 const settingSchema = new Schema({
 	name: { type: String, required: true, unique: true },
-	value: [],
+	value: [
+		{
+			description: { type: String },
+			isActive: { type: Boolean },
+			id: { type: Number },
+		},
+	],
 });
 
 settingSchema.methods.addSettingElement = function addElement(v) {

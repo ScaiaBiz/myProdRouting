@@ -33,8 +33,8 @@ app.use(express.json());
 app.use('/test', (req, res, next) => {
 	res.status(201).json('Sembra tutto ok, sembra tutto OK!');
 });
-app.use('/prodRouting/Task', prodRoutingTaskRts);
-app.use('/prodRouting/Stage', prodRoutingStageRts);
+app.use('/prodRouting/Tasks', prodRoutingTaskRts);
+app.use('/prodRouting/Stages', prodRoutingStageRts);
 
 // >>> Error Handler
 // Check Route
