@@ -15,10 +15,10 @@ const settingSchema = new Schema({
 
 settingSchema.methods.addSettingElement = function addElement(v) {
 	console.log('Provo ad aggiungere elemento al settaggio');
-	console.log(this);
-	console.log({ v });
+	// console.log(this);
+	// console.log({ v });
 	this.value.push(v);
-	console.log(this);
+	// console.log(this);
 };
 
 module.exports = mongoose.model('Setting', settingSchema);

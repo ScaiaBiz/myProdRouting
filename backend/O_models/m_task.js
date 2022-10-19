@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
-	activityId: { type: Schema.Types.ObjectId, ref: 'Activity', required: true },
-	stageId: { type: Schema.Types.ObjectId, ref: 'Stage', required: true },
-	description: { type: String, require: true },
-	isActive: { type: Boolean, default: true },
+	description: { type: String, require: true, unique: true },
+	isActive: { type: Boolean, default: true, required: true },
+	activityId: { type: Schema.Types.ObjectId, ref: 'Activity', require: true },
+	stageId: { type: Schema.Types.ObjectId, ref: 'Stage', require: true },
 	startDate: { type: Date },
 	startEndDate: { type: Date },
 	breaksTime: { type: Number, default: 0 },
