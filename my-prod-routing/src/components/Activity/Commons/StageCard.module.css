@@ -1,22 +1,34 @@
 .stage {
 	display: flex;
-	flex-direction: row;
-	align-items: center;
+	flex-direction: column;
+	align-items: flex-start;
 	width: 100%;
-	/* background-color: lightblue; */
 	margin: 1% 0;
+	border: 1px solid var(--higlight);
+	padding: 1.5rem 0.5rem;
+	border-radius: 10px;
+	box-shadow: 1px 1px 3px var(--bgColor);
 }
 
 .stageName {
 	color: var(--higlight);
-	/* background-color: lightcyan; */
+	font-size: 1.5rem;
+	line-height: 2rem;
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .tasks {
-	/* background-color: lightgoldenrodyellow; */
 	display: flex;
-	/* flex-direction: row; */
+	flex-wrap: wrap;
 	align-items: center;
-	display: flex;
+	row-gap: 1rem;
 	margin-left: 20px;
+	width: 100%;
+}
+
+.controllers {
+	background-color: aqua;
 }

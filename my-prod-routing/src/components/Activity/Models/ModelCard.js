@@ -10,7 +10,6 @@ import ErrorModal from '../../../utils/ErrorModal';
 import Icon from '../../../utils/Icon';
 import StageCard from '../Commons/StageCard';
 import AddStage from './AddStage';
-import AddTask from './AddTask';
 
 // function ModelCard({ data, addNewStage, resData }) {
 function ModelCard({ data, reload }) {
@@ -38,7 +37,7 @@ function ModelCard({ data, reload }) {
 	};
 
 	const postNewStage = async el => {
-		let sequenceNo = 10000;
+		let sequenceNo = 9000;
 		if (lastStageData !== 'first') {
 			sequenceNo = lastStageData.no + 500;
 		}
@@ -62,19 +61,12 @@ function ModelCard({ data, reload }) {
 	const addTask = async (el, prevElement, parent) => {
 		console.log({ prevElement });
 		console.log({ parent });
-		let sequenceNo = 10000;
+		let sequenceNo = 9000;
 		if (prevElement !== 'first') {
 			sequenceNo = prevElement.no + 500;
 		}
 
-		let body = {
-			modelId: data._id,
-			stageId: parent._id,
-			name: el.description,
-			no: sequenceNo,
-		};
-
-		console.log(body);
+		console.log(sequenceNo);
 
 		await sendRequest(
 			'prodRouting/Models/addTask',
@@ -94,25 +86,63 @@ function ModelCard({ data, reload }) {
 	};
 
 	const writeRoutesCards = () => {
-		if (data.route.stages.length > 0) {
-			const visuals = data.route.stages.map(stage => {
-				return (
-					<StageCard
-						key={stage._id}
-						data={stage}
-						addStage={handleAddNewStage}
-						addTask={addTask}
-						setLastStageData={setLastStageData}
-					/>
-				);
-			});
-			return visuals;
-		}
-		return (
+		const visuals = data.route.stages.map(stage => {
+			return (
+				<StageCard
+					key={stage._id}
+					data={stage}
+					addStage={handleAddNewStage}
+					addTask={addTask}
+					setLastStageData={setLastStageData}
+					deleteStage={deleteStage}
+					deleteTask={deleteTask}
+				/>
+			);
+		});
+		const firstElement = (
 			<div className={classes.insertFirstStage}>
 				<Icon text='add_circle' action={createFirstStage} />
 			</div>
 		);
+
+		visuals.unshift(firstElement);
+
+		return visuals;
+	};
+
+	const deleteModel = async () => {
+		await sendRequest(
+			'prodRouting/Models/deleteModel',
+			'POST',
+			{ modelId: data._id },
+			{
+				'Content-Type': 'application/json',
+			}
+		);
+		reload();
+	};
+
+	const deleteStage = async stageId => {
+		await sendRequest(
+			'prodRouting/Models/deleteStage',
+			'POST',
+			{ modelId: data._id, stageId: stageId },
+			{
+				'Content-Type': 'application/json',
+			}
+		);
+		reload();
+	};
+	const deleteTask = async (stageId, taskId) => {
+		await sendRequest(
+			'prodRouting/Models/deleteTask',
+			'POST',
+			{ modelId: data._id, stageId: stageId, taskId: taskId },
+			{
+				'Content-Type': 'application/json',
+			}
+		);
+		reload();
 	};
 
 	return (
@@ -121,7 +151,14 @@ function ModelCard({ data, reload }) {
 			{isLoading && <LoadingSpinner asOverlay />}
 			{showAddNewStage && addNewStage()}
 			<div className={classes.container}>
-				<div className={classes.header}>{data.name}</div>
+				<div className={classes.header}>
+					{data.name}
+					<div className={classes.icons}>
+						<Icon text='delete' action={deleteModel} cls='stopped' />
+						{/* <Icon text='content_copy' cls='todo' /> */}
+						<Icon text='start' cls='ongoing' />
+					</div>
+				</div>
 				<div className={classes.stages}>{writeRoutesCards()}</div>
 			</div>{' '}
 		</React.Fragment>

@@ -17,6 +17,7 @@ const routeModelSchema = new Schema({
 					},
 				],
 				commonNote: [],
+				isModel: { type: Boolean, default: true, required: true },
 			},
 		],
 	},

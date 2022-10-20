@@ -70,3 +70,52 @@ exports.addTask = async (req, res, next) => {
 		next(new HttpError('Errore non identificato: ' + error.message, 404));
 	}
 };
+
+exports.postDeleteModel = async (req, res, next) => {
+	console.log('>>> Elimino modello');
+	const modelId = req.body.modelId;
+	try {
+		await Model.findOneAndDelete({ _id: modelId });
+		res.status(201).json('Cancellato correttamente MODELLO');
+	} catch (error) {
+		next(new HttpError('Errore non identificato: ' + error.message, 404));
+	}
+};
+
+exports.postDeleteStage = async (req, res, next) => {
+	console.log('>>> Elimino STAGE dal modello');
+	const modelId = req.body.modelId;
+	const stageId = req.body.stageId;
+	try {
+		const model = await Model.findOne({ _id: modelId });
+		const filteredStages = model.route.stages.filter(stage => {
+			return stage._id != stageId;
+		});
+		model.route.stages = [...filteredStages];
+		await model.save();
+		res.status(201).json('Cancellato correttamente FASE');
+	} catch (error) {
+		next(new HttpError('Errore non identificato: ' + error.message, 404));
+	}
+};
+exports.postDeleteTask = async (req, res, next) => {
+	console.log('>>> Elimino TASK dello STAGE dal modello');
+	const modelId = req.body.modelId;
+	const stageId = req.body.stageId;
+	const taskId = req.body.taskId;
+	try {
+		const model = await Model.findOne({ _id: modelId });
+		model.route.stages.map(stage => {
+			if (stage._id == stageId) {
+				const filteredTasks = stage.tasks.filter(task => {
+					return task._id != taskId;
+				});
+				stage.tasks = filteredTasks;
+			}
+		});
+		await model.save();
+		res.status(201).json('Cancellato correttamente OPERAZIONE');
+	} catch (error) {
+		next(new HttpError('Errore non identificato: ' + error.message, 404));
+	}
+};

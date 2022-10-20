@@ -10,5 +10,8 @@ router.post('/create', modelCtrl.postNewModel);
 
 router.post('/addStage', modelCtrl.addStage);
 router.post('/addTask', modelCtrl.addTask);
+router.post('/deleteModel', modelCtrl.postDeleteModel);
+router.post('/deleteStage', modelCtrl.postDeleteStage);
+router.post('/deleteTask', modelCtrl.postDeleteTask);
 
 module.exports = router;

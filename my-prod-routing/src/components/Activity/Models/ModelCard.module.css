@@ -10,8 +10,20 @@
 }
 
 .header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	font-size: 2rem;
 	line-height: 2rem;
+	width: 100%;
+	line-height: 2.5rem;
+}
+
+.icons {
+	width: 25%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .stages {
@@ -21,29 +33,5 @@
 
 .insertFirstStage {
 	width: fit-content;
-	padding: 2% 0;
+	padding-top: 2%;
 }
-
-/* .stage {
-	display: flex;
-	flex-direction: row;
-	width: 100%;
-	background-color: lightblue;
-	margin: 1% 0;
-} */
-
-/* .stageName {
-	color: var(--higlight);
-	background-color: lightcyan;
-} */
-
-/* .tasks {
-	background-color: lightgoldenrodyellow;
-	display: flex;
-	margin-left: 20px;
-}
-
-.task {
-	background-color: lightgray;
-	margin: 0 10px;
-} */

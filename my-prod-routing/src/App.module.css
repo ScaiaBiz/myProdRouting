@@ -7,6 +7,10 @@
 	--STOPED: hsl(0, 50%, 50%);
 	--TODO: hsl(180, 50%, 50%);
 
+	--LiteONGOING: hsl(100, 60%, 75%);
+	--LitePAUSED: hsl(51, 60%, 75%);
+	--LiteTODO: hsl(180, 60%, 75%);
+
 	/* App commons */
 	/* #4F4319 */
 	--bgLight: lightgrey;
