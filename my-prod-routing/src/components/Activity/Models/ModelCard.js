@@ -145,6 +145,23 @@ function ModelCard({ data, reload }) {
 		reload();
 	};
 
+	const createActivity = async () => {
+		console.log('Mando richiesta');
+		const res = await sendRequest(
+			'prodRouting/Models/createActivity',
+			'POST',
+			{
+				modelId: data._id,
+				description: data.name,
+				dueDate: new Date(),
+			},
+			{
+				'Content-Type': 'application/json',
+			}
+		);
+		console.log(res);
+	};
+
 	return (
 		<React.Fragment>
 			{error && <ErrorModal error={error} onClear={clearError} />}
@@ -156,7 +173,7 @@ function ModelCard({ data, reload }) {
 					<div className={classes.icons}>
 						<Icon text='delete' action={deleteModel} cls='stopped' />
 						{/* <Icon text='content_copy' cls='todo' /> */}
-						<Icon text='start' cls='ongoing' />
+						<Icon text='start' action={createActivity} cls='ongoing' />
 					</div>
 				</div>
 				<div className={classes.stages}>{writeRoutesCards()}</div>

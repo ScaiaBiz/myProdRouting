@@ -11,6 +11,7 @@ const HttpError = require('./O_models/m_error');
 const prodRoutingTaskRts = require('./z_ProdRouting/tasks_r');
 const prodRoutingStageRts = require('./z_ProdRouting/stages_r');
 const prodRoutingModelsRts = require('./z_ProdRouting/model_r');
+const prodRoutingActivityRts = require('./z_ProdRouting/activity_r');
 
 //-------------------------Set main var
 const testing = true;
@@ -37,6 +38,7 @@ app.use('/test', (req, res, next) => {
 app.use('/prodRouting/Tasks', prodRoutingTaskRts);
 app.use('/prodRouting/Stages', prodRoutingStageRts);
 app.use('/prodRouting/Models', prodRoutingModelsRts);
+app.use('/prodRouting/Activitis', prodRoutingActivityRts);
 
 // >>> Error Handler
 // Check Route

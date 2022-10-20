@@ -14,4 +14,6 @@ router.post('/deleteModel', modelCtrl.postDeleteModel);
 router.post('/deleteStage', modelCtrl.postDeleteStage);
 router.post('/deleteTask', modelCtrl.postDeleteTask);
 
+router.post('/createActivity', modelCtrl.postCreateActivityFromModel);
+
 module.exports = router;

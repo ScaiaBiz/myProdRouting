@@ -2,6 +2,7 @@ const HttpError = require('../O_models/m_error');
 
 const Setting = require('../O_models/m_settings');
 const Model = require('../O_models/m_routeModel');
+const Activity = require('../O_models/m_activity');
 const Stage = require('../O_models/m_stage');
 const Task = require('../O_models/m_task');
 
@@ -115,6 +116,61 @@ exports.postDeleteTask = async (req, res, next) => {
 		});
 		await model.save();
 		res.status(201).json('Cancellato correttamente OPERAZIONE');
+	} catch (error) {
+		next(new HttpError('Errore non identificato: ' + error.message, 404));
+	}
+};
+
+exports.postCreateActivityFromModel = async (req, res, next) => {
+	const modelId = req.body.modelId;
+	const dueDate = new Date(req.body.dueDate);
+	const description = req.body.description;
+	try {
+		const model = await Model.findOne({ _id: modelId });
+
+		const newActivity = new Activity({
+			name: model.name,
+			description: description,
+			status: 'TODO',
+			dueDate: dueDate,
+			stages: [],
+		});
+
+		model.route.stages.map(async stage => {
+			const newStage = new Stage({
+				activityId: newActivity._id,
+				description: stage.name,
+				status: 'TODO',
+			});
+
+			newActivity.stages.push({
+				stageId: newStage._id,
+				no: stage.no,
+				tasks: [],
+			});
+			stage.tasks.map(async task => {
+				const newTask = new Task({
+					description: task.name,
+					isActive: true,
+					status: 'TODO',
+					activityId: newActivity._id,
+					stageId: newStage._id,
+				});
+				newActivity.stages.map(na_stage => {
+					if (na_stage.stageId == newStage._id) {
+						na_stage.tasks.push({
+							taskId: newTask._id,
+							no: task.no,
+						});
+					}
+				});
+				await newTask.save();
+			});
+			await newStage.save();
+		});
+		await newActivity.save();
+		console.log('Dita incrociatissime');
+		res.status(201).json('Tutto bene');
 	} catch (error) {
 		next(new HttpError('Errore non identificato: ' + error.message, 404));
 	}

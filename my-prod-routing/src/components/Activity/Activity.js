@@ -7,6 +7,9 @@ import { useHttpClient } from '../../hooks/http-hooks';
 import LoadingSpinner from '../../utils/LoadingSpinner';
 import ErrorModal from '../../utils/ErrorModal';
 
+import ActivityList from './Activity/ActivityList';
+import ActivityContent from './Activity/ActivityContent';
+
 import Icon from '../../utils/Icon';
 
 function Activity() {
@@ -19,7 +22,12 @@ function Activity() {
 			{error && <ErrorModal error={error} onClear={clearError} />}
 			{isLoading && <LoadingSpinner asOverlay />}
 			<div className={classes.container}>
-				{!child && 'Attività da svolgere'}
+				{!child && (
+					<React.Fragment>
+						<ActivityList />
+						<ActivityContent />
+					</React.Fragment>
+				)}
 				<Outlet />
 			</div>
 		</React.Fragment>

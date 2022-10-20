@@ -30,7 +30,7 @@ routeModelSchema.methods.addStage = function addStage(stage) {
 };
 routeModelSchema.methods.addTask = function addTask(stageId, task) {
 	console.log('Provo ad aggiungere TASK per lo sTAGE nel MODELLO');
-	console.log(this);
+	// console.log(this);
 	this.route.stages.map(stage => {
 		if (stage._id == stageId) {
 			stage.tasks.push(task);
@@ -40,7 +40,7 @@ routeModelSchema.methods.addTask = function addTask(stageId, task) {
 
 routeModelSchema.methods.normalizeNoSequence = function normalizeNoSequence() {
 	console.log('>>> ROUTE_MODEL: > Normalizzo ordine di sequenza');
-	console.log(this);
+	// console.log(this);
 	let stageNo = 10000;
 	let taskNo = 10000;
 	this.route.stages.sort((a, b) => {
