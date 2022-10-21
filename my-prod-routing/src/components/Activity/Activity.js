@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, useOutlet } from 'react-router-dom';
 
 import classes from './Activity.module.css';
@@ -14,6 +14,11 @@ import Icon from '../../utils/Icon';
 
 function Activity() {
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
+	const [selectedActivity, setSelectedActivity] = useState(null);
+
+	useEffect(() => {
+		console.log({ selectedActivity });
+	}, [selectedActivity]);
 
 	let child = useOutlet();
 
@@ -24,8 +29,11 @@ function Activity() {
 			<div className={classes.container}>
 				{!child && (
 					<React.Fragment>
-						<ActivityList />
-						<ActivityContent />
+						<ActivityList
+							selectedActivity={selectedActivity}
+							setSelectedActivity={setSelectedActivity}
+						/>
+						<ActivityContent data={selectedActivity} />
 					</React.Fragment>
 				)}
 				<Outlet />

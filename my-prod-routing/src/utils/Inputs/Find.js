@@ -11,6 +11,7 @@ function Find({
 	setRes,
 	setSecondaryRes,
 	secondaryData,
+	initialValue = '',
 	label,
 	inputId,
 	driver,
@@ -104,7 +105,7 @@ function Find({
 					validators={[VALIDATOR_REQUIRE()]}
 					errorText='Campo obbligatorio'
 					onInput={inputHandler}
-					initValue=''
+					initValue={initialValue}
 					initIsValid={false}
 					width={width}
 				/>

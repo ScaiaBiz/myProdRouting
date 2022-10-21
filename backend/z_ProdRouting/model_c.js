@@ -122,6 +122,7 @@ exports.postDeleteTask = async (req, res, next) => {
 };
 
 exports.postCreateActivityFromModel = async (req, res, next) => {
+	console.log('>>> Creo nuova ATTIVITA');
 	const modelId = req.body.modelId;
 	const dueDate = new Date(req.body.dueDate);
 	const description = req.body.description;
@@ -129,7 +130,7 @@ exports.postCreateActivityFromModel = async (req, res, next) => {
 		const model = await Model.findOne({ _id: modelId });
 
 		const newActivity = new Activity({
-			name: model.name,
+			modelName: model.name,
 			description: description,
 			status: 'TODO',
 			dueDate: dueDate,
@@ -144,11 +145,12 @@ exports.postCreateActivityFromModel = async (req, res, next) => {
 			});
 
 			newActivity.stages.push({
-				stageId: newStage._id,
+				stage: newStage._id,
 				no: stage.no,
 				tasks: [],
 			});
 			stage.tasks.map(async task => {
+				console.log('Task descrtiption: ' + task.name);
 				const newTask = new Task({
 					description: task.name,
 					isActive: true,
@@ -157,9 +159,10 @@ exports.postCreateActivityFromModel = async (req, res, next) => {
 					stageId: newStage._id,
 				});
 				newActivity.stages.map(na_stage => {
-					if (na_stage.stageId == newStage._id) {
+					console.log(na_stage.stage == newStage._id);
+					if (na_stage.stage == newStage._id) {
 						na_stage.tasks.push({
-							taskId: newTask._id,
+							task: newTask._id,
 							no: task.no,
 						});
 					}
@@ -169,7 +172,6 @@ exports.postCreateActivityFromModel = async (req, res, next) => {
 			await newStage.save();
 		});
 		await newActivity.save();
-		console.log('Dita incrociatissime');
 		res.status(201).json('Tutto bene');
 	} catch (error) {
 		next(new HttpError('Errore non identificato: ' + error.message, 404));

@@ -10,8 +10,8 @@ import ErrorModal from '../../../utils/ErrorModal';
 import Icon from '../../../utils/Icon';
 import StageCard from '../Commons/StageCard';
 import AddStage from './AddStage';
+import NewActivity from '../Activity/NewActivity';
 
-// function ModelCard({ data, addNewStage, resData }) {
 function ModelCard({ data, reload }) {
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -26,7 +26,6 @@ function ModelCard({ data, reload }) {
 	};
 
 	const addNewStage = () => {
-		console.log('here');
 		const formNewStage = (
 			<AddStage close={handleAddNewStage} action={postNewStage} />
 		);
@@ -59,15 +58,10 @@ function ModelCard({ data, reload }) {
 	};
 
 	const addTask = async (el, prevElement, parent) => {
-		console.log({ prevElement });
-		console.log({ parent });
 		let sequenceNo = 9000;
 		if (prevElement !== 'first') {
 			sequenceNo = prevElement.no + 500;
 		}
-
-		console.log(sequenceNo);
-
 		await sendRequest(
 			'prodRouting/Models/addTask',
 			'POST',
@@ -83,6 +77,42 @@ function ModelCard({ data, reload }) {
 		);
 
 		reload();
+	};
+
+	const [showCreateActivity, setShowCreateActivity] = useState(false);
+	const handleShowCreateActivity = () => {
+		setShowCreateActivity(!showCreateActivity);
+	};
+
+	const addNewActivity = () => {
+		const formNewActivity = (
+			<NewActivity
+				modelData={data}
+				close={handleShowCreateActivity}
+				action={createActivity}
+			/>
+		);
+		return ReactDom.createPortal(
+			formNewActivity,
+			document.getElementById('modal-hook')
+		);
+	};
+
+	const createActivity = async (modelId, description, dueDate) => {
+		console.log('Mando richiesta');
+		const res = await sendRequest(
+			'prodRouting/Models/createActivity',
+			'POST',
+			{
+				modelId: modelId,
+				description: description,
+				dueDate: new Date(dueDate),
+			},
+			{
+				'Content-Type': 'application/json',
+			}
+		);
+		console.log(res);
 	};
 
 	const writeRoutesCards = () => {
@@ -145,39 +175,26 @@ function ModelCard({ data, reload }) {
 		reload();
 	};
 
-	const createActivity = async () => {
-		console.log('Mando richiesta');
-		const res = await sendRequest(
-			'prodRouting/Models/createActivity',
-			'POST',
-			{
-				modelId: data._id,
-				description: data.name,
-				dueDate: new Date(),
-			},
-			{
-				'Content-Type': 'application/json',
-			}
-		);
-		console.log(res);
-	};
-
 	return (
 		<React.Fragment>
 			{error && <ErrorModal error={error} onClear={clearError} />}
 			{isLoading && <LoadingSpinner asOverlay />}
 			{showAddNewStage && addNewStage()}
+			{showCreateActivity && addNewActivity()}
 			<div className={classes.container}>
 				<div className={classes.header}>
 					{data.name}
 					<div className={classes.icons}>
 						<Icon text='delete' action={deleteModel} cls='stopped' />
-						{/* <Icon text='content_copy' cls='todo' /> */}
-						<Icon text='start' action={createActivity} cls='ongoing' />
+						<Icon
+							text='start'
+							action={handleShowCreateActivity}
+							cls='ongoing'
+						/>
 					</div>
 				</div>
 				<div className={classes.stages}>{writeRoutesCards()}</div>
-			</div>{' '}
+			</div>
 		</React.Fragment>
 	);
 }

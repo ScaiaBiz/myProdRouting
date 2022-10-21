@@ -1,17 +1,26 @@
 .container {
 	width: 90%;
 	border: 1px solid black;
-	height: 90px;
+	height: fit-content;
 	padding: 1%;
 	background-color: var(--contrast);
 	border-radius: 6px;
 	box-shadow: 1px 2px 3px var(--bgColor);
 }
 
-/* .container:hover{
-
-} */
-
-.name {
+.description {
+	color: var(--bgColor);
 	font-size: 1.5rem;
+}
+
+.modelName {
+	color: var(--higlight);
+}
+
+.controlls {
+	font-size: 2rem;
+}
+
+.isSelected {
+	background-color: var(--LiteTODO);
 }

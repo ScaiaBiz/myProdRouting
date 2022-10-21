@@ -1,0 +1,38 @@
+.task {
+	margin: 0 10px;
+	min-height: 60px;
+	border: 1px solid var(--bgColor);
+	border-radius: 6px;
+	min-width: 180px;
+	height: fit-content;
+	width: fit-content;
+	padding: 8px 12px;
+}
+
+.controlls {
+	font-size: 1.3rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.c_top {
+	margin-bottom: 0.5rem;
+}
+.c_bottom {
+	margin-top: 0.5rem;
+}
+
+.TODO {
+	background-color: var(--LiteTODO);
+}
+.ONGOING {
+	background-color: var(--LiteONGOING);
+}
+.PAUSED {
+	background-color: var(--LitePAUSED);
+}
+.DNOE {
+	background-color: var(--ENDED);
+	color: var(--ENDEDtext);
+}

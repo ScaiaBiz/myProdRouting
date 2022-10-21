@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 
 const stageSchema = new Schema({
 	activityId: { type: Schema.Types.ObjectId, ref: 'Activity', require: true },
-	description: { type: String, require: true },
-	// no: { type: Number, required: true },
+	description: { type: String, required: true },
 	status: { type: String, required: true, default: 'TODO' },
 	isActive: { type: Boolean, default: true, require: true },
 	startDate: { type: Date },

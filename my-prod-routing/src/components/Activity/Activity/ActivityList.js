@@ -8,7 +8,7 @@ import ErrorModal from '../../../utils/ErrorModal';
 
 import ActivityCard from './ActivityCard';
 
-function ActivityList() {
+function ActivityList({ selectedActivity, setSelectedActivity }) {
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
 	const [activityElements, setActivityElements] = useState(null);
@@ -110,9 +110,16 @@ function ActivityList() {
 		}
 	}, [activityData]);
 
-	const writeActivitys = async () => {
-		//Send request
+	const deleteActivity = async actId => {
+		const data = await sendRequest(
+			`prodRouting/Activitis/deleteActivity/${actId}`
+		);
+		if (data) {
+			getActivitisList();
+		}
+	};
 
+	const writeActivitys = async () => {
 		let lastDate = '';
 		const elements = activityData.map(activity => {
 			const act_Date = new Date(activity.dueDate);
@@ -120,7 +127,19 @@ function ActivityList() {
 				act_Date.getMonth() + 1
 			} - ${act_Date.getFullYear()}`;
 
-			const element = <ActivityCard key={activity._id} data={activity} />;
+			activity.isSelected = false;
+			if (selectedActivity?._id == activity._id) {
+				activity.isSelected = true;
+			}
+
+			const element = (
+				<ActivityCard
+					key={activity._id}
+					data={activity}
+					deleteActivity={deleteActivity}
+					setSelectedActivity={setSelectedActivity}
+				/>
+			);
 			if (lastDate !== currentDate) {
 				lastDate = currentDate;
 
@@ -136,6 +155,10 @@ function ActivityList() {
 		});
 		setActivityElements(elements);
 	};
+
+	useEffect(() => {
+		writeActivitys();
+	}, [selectedActivity]);
 
 	const getActivitisList = async () => {
 		const res = await sendRequest('prodRouting/Activitis/getList');
