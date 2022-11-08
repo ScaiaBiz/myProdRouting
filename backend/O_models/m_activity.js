@@ -24,12 +24,24 @@ const activitySchema = new Schema({
 	],
 });
 
-// activitySchema.methods.addSettingElement = function addElement(v) {
-// 	console.log('Provo ad aggiungere elemento al settaggio');
-// 	// console.log(this);
-// 	// console.log({ v });
-// 	this.value.push(v);
-// 	// console.log(this);
-// };
+activitySchema.methods.normalizeNoSequence = function normalizeNoSequence() {
+	console.log('>>> ACTIVITY: > Normalizzo ordine di sequenza');
+	let stageNo = 10000;
+	let taskNo = 10000;
+	this.stages.sort((a, b) => {
+		return a.no - b.no;
+	});
+	this.stages.map(stage => {
+		stage.no = stageNo;
+		stage.tasks.sort((a, b) => {
+			return a.no - b.no;
+		});
+		stage.tasks.map(task => {
+			task.no = taskNo;
+			taskNo += 10000;
+		});
+		stageNo += 10000;
+	});
+};
 
 module.exports = mongoose.model('Activity', activitySchema);

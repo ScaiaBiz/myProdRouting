@@ -1,16 +1,23 @@
 .task {
-	margin: 0 10px;
 	min-height: 60px;
 	border: 1px solid var(--bgColor);
 	border-radius: 6px;
 	min-width: 180px;
 	height: fit-content;
 	width: fit-content;
-	padding: 8px 12px;
+}
+
+.description {
+	padding: 0 2%;
+	font-weight: bold;
+}
+.dedicatedTime {
+	padding: 0 2%;
+	font-size: smaller;
 }
 
 .controlls {
-	font-size: 1.3rem;
+	font-size: 1.4rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -24,7 +31,8 @@
 }
 
 .TODO {
-	background-color: var(--LiteTODO);
+	background-color: var(--LiteENDED);
+	/* background-color: var(--LiteTODO); */
 }
 .ONGOING {
 	background-color: var(--LiteONGOING);
@@ -32,7 +40,10 @@
 .PAUSED {
 	background-color: var(--LitePAUSED);
 }
-.DNOE {
+.DONE {
 	background-color: var(--ENDED);
-	color: var(--ENDEDtext);
+	/* color: var(--ENDEDtext); */
+}
+.DONEb {
+	visibility: hidden;
 }

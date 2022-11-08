@@ -10,6 +10,8 @@
 	--LiteONGOING: hsl(100, 60%, 75%);
 	--LitePAUSED: hsl(51, 60%, 75%);
 	--LiteTODO: hsl(180, 60%, 75%);
+	--LiteSTOPED: hsl(0, 60%, 75%);
+	--LiteENDED: hsl(0, 0%, 95%);
 
 	/* App commons */
 	/* #4F4319 */

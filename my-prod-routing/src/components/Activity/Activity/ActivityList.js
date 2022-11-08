@@ -13,96 +13,10 @@ function ActivityList({ selectedActivity, setSelectedActivity }) {
 
 	const [activityElements, setActivityElements] = useState(null);
 	const [activityData, setActivityData] = useState(null);
-	//[
-	// {
-	// 	name: 'Attività 1',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 20 2022 18:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// {
-	// 	name: 'Attività 2',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 20 2022 19:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// {
-	// 	name: 'Attività 3',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 20 2022 20:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// {
-	// 	name: 'Attività 4',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 21 2022 07:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// {
-	// 	name: 'Attività 5',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 21 2022 08:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// {
-	// 	name: 'Attività 6',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 21 2022 09:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// {
-	// 	name: 'Attività 7',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 21 2022 10:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// {
-	// 	name: 'Attività 8',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 21 2022 11:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// {
-	// 	name: 'Attività 9',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 22 2022 07:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// {
-	// 	name: 'Attività 10',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 22 2022 08:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// {
-	// 	name: 'Attività 11',
-	// 	description: 'descrizione',
-	// 	stages: [],
-	// 	tasks: [],
-	// 	dueDate:
-	// 		'Thu Oct 22 2022 09:12:59 GMT+0200 (Ora legale dell’Europa centrale)',
-	// },
-	// ]);
+
+	useEffect(() => {
+		getActivitisList();
+	}, []);
 
 	useEffect(() => {
 		if (activityData) {
@@ -117,6 +31,7 @@ function ActivityList({ selectedActivity, setSelectedActivity }) {
 		if (data) {
 			getActivitisList();
 		}
+		setSelectedActivity(null);
 	};
 
 	const writeActivitys = async () => {
@@ -157,17 +72,24 @@ function ActivityList({ selectedActivity, setSelectedActivity }) {
 	};
 
 	useEffect(() => {
-		writeActivitys();
+		console.log({ selectedActivity });
+		console.log({ activityData });
+		if (selectedActivity) {
+			const newActData = activityData?.map(act => {
+				if (act._id == selectedActivity._id) {
+					return selectedActivity;
+				}
+				return act;
+			});
+			setActivityData(newActData);
+		}
 	}, [selectedActivity]);
 
 	const getActivitisList = async () => {
 		const res = await sendRequest('prodRouting/Activitis/getList');
+		console.log({ res });
 		setActivityData(res);
 	};
-
-	useEffect(() => {
-		getActivitisList();
-	}, []);
 
 	return (
 		<React.Fragment>

@@ -3,6 +3,8 @@ import ReactDom from 'react-dom';
 
 import classes from './ContentStage.module.css';
 
+import { millisecondsToHourMin } from '../../../../lib/functrions';
+
 import Icon from '../../../../utils/Icon';
 import ContentTask from './ContentTask';
 import AddTask from '../../Models/AddTask';
@@ -14,11 +16,14 @@ function ContentStage({
 	setLastStageData,
 	deleteStage,
 	deleteTask,
+	start,
 }) {
 	const insterStage = () => {
 		setLastStageData(data);
 		addStage();
 	};
+
+	// const [stageData, setStageData] = useState(data);
 
 	const [newTask, setNewTask] = useState(null);
 	const [showAddNewTask, setShowAddNewTask] = useState(false);
@@ -40,6 +45,14 @@ function ContentStage({
 		addTask(newTask, 'first', data);
 	};
 
+	const getDedicatedTime = () => {
+		let time = 0;
+		data.tasks.map(task => {
+			time += task.task.workedTime;
+		});
+		return millisecondsToHourMin(time);
+	};
+
 	useEffect(() => {
 		if (newTask) {
 			createFirstTask();
@@ -52,10 +65,13 @@ function ContentStage({
 			<div key={data._id} className={classes.stage}>
 				<div className={classes.stageName}>
 					{data?.stage?.description}
+					<div className={classes.stageDedicatedTime}>
+						{/* Dedicato: {getDedicatedTime()} */}
+					</div>
 					<Icon
 						text={'delete'}
 						action={() => {
-							deleteStage(data._id);
+							deleteStage(data.stage._id);
 						}}
 					/>
 				</div>

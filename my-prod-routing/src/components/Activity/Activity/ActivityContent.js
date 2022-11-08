@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDom from 'react-dom';
 
 import classes from './ActivityContent.module.css';
+
+import { millisecondsToHourMin } from '../../../lib/functrions';
 
 import { useHttpClient } from '../../../hooks/http-hooks';
 import LoadingSpinner from '../../../utils/LoadingSpinner';
@@ -12,9 +14,10 @@ import Icon from '../../../utils/Icon';
 
 import AddStage from '../Models/AddStage';
 
-function ActivityContent({ data }) {
+function ActivityContent({ data, setData }) {
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
-	console.log(data);
+
+	const [activityData, setActivityData] = useState(data);
 
 	const [lastStageData, setLastStageData] = useState(null);
 	const [showAddNewStage, setShowAddNewStage] = useState(false);
@@ -42,11 +45,13 @@ function ActivityContent({ data }) {
 			sequenceNo = lastStageData.no + 500;
 		}
 
-		await sendRequest(
+		console.log(sequenceNo);
+
+		const res = await sendRequest(
 			'prodRouting/Activitis/addStage',
 			'POST',
 			{
-				modelId: data._id,
+				activityId: data._id,
 				name: el.description,
 				no: sequenceNo,
 			},
@@ -54,39 +59,44 @@ function ActivityContent({ data }) {
 				'Content-Type': 'application/json',
 			}
 		);
+		setData(res);
 	};
 
 	const deleteStage = async stageId => {
-		await sendRequest(
+		const res = await sendRequest(
 			'prodRouting/Activitis/deleteStage',
 			'POST',
-			{ modelId: data._id, stageId: stageId },
+			{ activityId: data._id, stageId: stageId },
 			{
 				'Content-Type': 'application/json',
 			}
 		);
-	};
-	const deleteTask = async (stageId, taskId) => {
-		await sendRequest(
-			'prodRouting/Activitis/deleteTask',
-			'POST',
-			{ modelId: data._id, stageId: stageId, taskId: taskId },
-			{
-				'Content-Type': 'application/json',
-			}
-		);
+		setData(res);
 	};
 
+	const deleteTask = async (stageId, taskId) => {
+		const res = await sendRequest(
+			'prodRouting/Activitis/deleteTask',
+			'POST',
+			{ activityId: data._id, stageId: stageId, taskId: taskId },
+			{
+				'Content-Type': 'application/json',
+			}
+		);
+		setData(res);
+	};
+
+	//fixme:
 	const addTask = async (el, prevElement, parent) => {
 		let sequenceNo = 9000;
 		if (prevElement !== 'first') {
 			sequenceNo = prevElement.no + 500;
 		}
-		await sendRequest(
+		const res = await sendRequest(
 			'prodRouting/Activitis/addTask',
 			'POST',
 			{
-				modelId: data._id,
+				activityId: data._id,
 				stageId: parent._id,
 				name: el.description,
 				no: sequenceNo,
@@ -95,10 +105,11 @@ function ActivityContent({ data }) {
 				'Content-Type': 'application/json',
 			}
 		);
+		setData(res);
 	};
 
 	const writeRoutesCards = () => {
-		const visuals = data.stages.map(stage => {
+		const visuals = data.stages?.map(stage => {
 			return (
 				<ContentStage
 					key={stage._id}
@@ -122,6 +133,23 @@ function ActivityContent({ data }) {
 		return visuals;
 	};
 
+	const getTotalTime = () => {
+		let time = 0;
+		data.stages?.map(stage => {
+			console.log(stage);
+			stage.tasks.map(task => {
+				time += task.task.workedTime;
+			});
+		});
+		return millisecondsToHourMin(time);
+	};
+
+	useEffect(() => {
+		if (activityData) {
+			writeRoutesCards();
+		}
+	}, [activityData]);
+
 	return (
 		<React.Fragment>
 			{error && <ErrorModal error={error} onClear={clearError} />}
@@ -131,6 +159,9 @@ function ActivityContent({ data }) {
 				<div className={classes.container}>
 					<div className={classes.header}>{data.description}</div>
 					<div className={classes.stages}>{writeRoutesCards()}</div>
+					<div className={classes.totTime}>
+						{/* Totale dedicato: {getTotalTime()} */}
+					</div>
 				</div>
 			)}
 		</React.Fragment>

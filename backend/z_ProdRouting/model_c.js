@@ -52,8 +52,9 @@ exports.addStage = async (req, res, next) => {
 		next(new HttpError('Errore non identificato: ' + error.message, 404));
 	}
 };
+
 exports.addTask = async (req, res, next) => {
-	console.log('>>> Aggiungo fase al modello');
+	console.log('>>> Aggiungo operazione al modello');
 	const modelId = req.body.modelId;
 	const stageId = req.body.stageId;
 	try {
@@ -150,7 +151,6 @@ exports.postCreateActivityFromModel = async (req, res, next) => {
 				tasks: [],
 			});
 			stage.tasks.map(async task => {
-				console.log('Task descrtiption: ' + task.name);
 				const newTask = new Task({
 					description: task.name,
 					isActive: true,
@@ -159,7 +159,6 @@ exports.postCreateActivityFromModel = async (req, res, next) => {
 					stageId: newStage._id,
 				});
 				newActivity.stages.map(na_stage => {
-					console.log(na_stage.stage == newStage._id);
 					if (na_stage.stage == newStage._id) {
 						na_stage.tasks.push({
 							task: newTask._id,

@@ -5,9 +5,8 @@ import classes from './ActivityCard.module.css';
 import Icon from '../../../utils/Icon';
 
 function ActivityCard({ data, deleteActivity, setSelectedActivity }) {
-	const [hide, setHide] = useState('');
-
 	const doAction = () => {
+		setSelectedActivity(null);
 		deleteActivity(data._id);
 	};
 
@@ -21,7 +20,7 @@ function ActivityCard({ data, deleteActivity, setSelectedActivity }) {
 			id={data._id}
 			className={`${classes.container} ${
 				data.isSelected && classes.isSelected
-			} ${hide}`}
+			}`}
 			onClick={select}
 		>
 			<div className={classes.description}>{data.description}</div>

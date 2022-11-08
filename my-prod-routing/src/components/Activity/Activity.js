@@ -17,7 +17,7 @@ function Activity() {
 	const [selectedActivity, setSelectedActivity] = useState(null);
 
 	useEffect(() => {
-		console.log({ selectedActivity });
+		console.log('Selezione modificata');
 	}, [selectedActivity]);
 
 	let child = useOutlet();
@@ -33,7 +33,10 @@ function Activity() {
 							selectedActivity={selectedActivity}
 							setSelectedActivity={setSelectedActivity}
 						/>
-						<ActivityContent data={selectedActivity} />
+						<ActivityContent
+							data={selectedActivity}
+							setData={setSelectedActivity}
+						/>
 					</React.Fragment>
 				)}
 				<Outlet />

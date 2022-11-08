@@ -119,3 +119,8 @@ export const TotalMinToHourMin = value => {
 	min = min - hour * 60;
 	return timeFormat(hour) + ':' + timeFormat(min);
 };
+
+export const millisecondsToHourMin = value => {
+	const min = Math.round(Number(value) / 60000);
+	return TotalMinToHourMin(min);
+};

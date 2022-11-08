@@ -1,13 +1,14 @@
 .container {
 	background-color: var(--contrast);
-	width: 79%;
-	margin-left: 1%;
+	width: 70%;
+	margin: 0 5%;
 	padding: 1%;
 	border: 1px solid var(--bgColor);
 	border-radius: 10px;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	height: fit-content;
 }
 
 .header {
@@ -18,6 +19,10 @@
 	line-height: 2rem;
 	width: 100%;
 	line-height: 2.5rem;
+}
+
+.totTime {
+	font-size: 1.5rem;
 }
 
 .icons {

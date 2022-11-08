@@ -7,6 +7,7 @@
 	height: fit-content;
 	width: fit-content;
 	padding: 8px 12px;
+	background-color: var(--LiteENDED);
 }
 
 .controlls {
@@ -32,7 +33,7 @@
 .PAUSED {
 	background-color: var(--LitePAUSED);
 }
-.DNOE {
+.DONE {
 	background-color: var(--ENDED);
 	color: var(--ENDEDtext);
 }

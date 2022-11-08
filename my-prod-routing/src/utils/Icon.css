@@ -68,3 +68,16 @@
 	text-shadow: 1px 2px 3px var(--ENDED);
 	/* background-color: var(--higlight); */
 }
+
+.everTodo:hover {
+	text-shadow: 1px 2px 4px var(--TODO);
+}
+.everOngoing:hover {
+	text-shadow: 1px 2px 4px var(--ONGOING);
+}
+.everPaused:hover {
+	text-shadow: 1px 2px 4px var(--PAUSED);
+}
+.everStopped:hover {
+	text-shadow: 1px 2px 4px var(--STOPED);
+}
